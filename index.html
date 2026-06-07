@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Body Pass - Planche etablissements</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--cream:#FBF7F1;--cream2:#F2EBDF;--burgundy:#A3695B;--champagne:#C2B59B;--text:#54504E;--title:#2C2826;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--cream);color:var(--text);font-family:"Source Sans 3",sans-serif;}
+  .wrap{max-width:1080px;margin:0 auto;padding:56px 28px 80px;}
+  header{text-align:center;margin-bottom:14px;}
+  .mark{font-family:"Playfair Display",serif;letter-spacing:.42em;font-weight:600;font-size:15px;color:var(--burgundy);text-transform:uppercase;margin:0 0 18px;}
+  h1{font-family:"Playfair Display",serif;font-weight:600;color:var(--title);font-size:30px;line-height:1.2;margin:0 0 8px;}
+  .sub{font-size:15px;color:var(--text);max-width:660px;margin:0 auto;line-height:1.55;}
+  .rule{width:54px;height:1px;background:var(--champagne);margin:26px auto 0;}
+  .note{background:var(--cream2);border-left:3px solid var(--burgundy);padding:14px 18px;margin:34px 0 6px;font-size:13.5px;line-height:1.55;border-radius:2px;}
+  .note b{color:var(--title);}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 26px;margin-top:30px;}
+  .card{background:#fff;border:1px solid #ece3d6;border-radius:3px;overflow:hidden;display:flex;flex-direction:column;}
+  .ph{position:relative;width:100%;height:255px;background:var(--cream2);overflow:hidden;}
+  .ph img{width:100%;height:100%;object-fit:cover;display:block;}
+  .ph .fail{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;font-size:12.5px;color:var(--burgundy);padding:18px;}
+  .meta{padding:16px 18px 18px;}
+  .name{font-family:"Playfair Display",serif;font-size:18px;color:var(--title);font-weight:600;margin:0 0 3px;}
+  .vis{margin:0 0 6px;font-size:13px;color:var(--burgundy);font-weight:600;}
+  .vis span{color:#9a938d;font-weight:400;}
+  .src{font-size:12px;color:#8a847f;word-break:break-all;}
+  .src a{color:var(--burgundy);text-decoration:none;}
+  .flag{display:inline-block;margin-top:7px;font-size:11.5px;color:#fff;background:var(--burgundy);border-radius:2px;padding:2px 8px;}
+  footer{text-align:center;margin-top:56px;font-size:12px;color:#9a938d;letter-spacing:.04em;}
+  @media(max-width:680px){.grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="mark">Body&nbsp;Pass</p>
+    <h1>Etablissements a reintegrer</h1>
+    <p class="sub">Photos tirees des sites officiels de chaque etablissement, avec le nombre de visites Body Pass sur les 12 derniers mois.</p>
+    <div class="rule"></div>
+  </header>
+  <div class="note">Deux visuels a finaliser : <b>Spa Baron Tavernier</b> (restaurant en attendant la piscine) et <b>Hotel des Horlogers</b> (spa en attendant le lobby).</div>
+  <div class="grid" id="grid"></div>
+  <footer>Body Pass - 15e edition - document interne - photos propriete de leurs etablissements respectifs</footer>
+</div>
+<script>
+var items = [
+  {n:'VAGHEGGI Phyto Space Lausanne', v:190, src:'phytospace.ch', page:'https://www.phytospace.ch/', img:'https://phytospace.ch/wp-content/uploads/2023/12/1-1024x1024.webp', flag:''},
+  {n:'Fairmont Le Montreux Palace', v:114, src:'fairmont.com', page:'https://www.fairmont.com/en/hotels/montreux/fairmont-le-montreux-palace/wellness/spa.html', img:'https://m.ahstatic.com/is/image/accorhotels/aja_p_6460-88:8by10?fmt=webp&wid=900&hei=1100&qlt=80', flag:''},
+  {n:'Akyado Geneve Centre', v:108, src:'akyado-geneve.ch', page:'https://www.akyado-geneve.ch/', img:'https://cdn.prod.website-files.com/6940751abf6eb4f9555c0615/695e3d5b8983b8fddb8e892e_0K6A6193.avif', flag:''},
+  {n:'Beauty Concept Vevey', v:106, src:'beautyconceptswiss.ch', page:'https://beautyconceptswiss.ch/', img:'https://phosphor.utils.elfsightcdn.com/?url=https%3A%2F%2Finstagram.fbho3-1.fna.fbcdn.net%2Fv%2Ft39.30808-6%2F459323807_18248847058258886_5556322712854961588_n.jpg%3Fstp%3Ddst-jpg_e35_s1080x1080_sh0.08%26efg%3DeyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE0NDAuc2RyLmYzMDgwOC5kZWZhdWx0X2ltYWdlIn0%26_nc_ht%3Dinstagram.fbho3-1.fna.fbcdn.net%26_nc_cat%3D102%26_nc_ohc%3D2eRpVJsbwjwQ7kNvgGT-G0Z%26_nc_gid%3Dce539b03860b47f897e6d40a31979e8d%26edm%3DAPU89FAAAAAA%26ccb%3D7-5%26oh%3D00_AYBJ8t8oI4rc_d9lvmeRG4gOhsAu2DmfcMqgkWUL2qW5TQ%26oe%3D674251D6%26_nc_sid%3Dbc0c2c', flag:''},
+  {n:'Spa Baron Tavernier', v:98, src:'barontavernier.ch', page:'https://www.barontavernier.ch/spa-clinique-eden-lavaux/', img:'https://f0b8819e.delivery.rocketcdn.me/wp-content/uploads/2025/09/Restaurant-01.webp', flag:'visuel restaurant (piscine a venir)'},
+  {n:'Crans Ambassador Spa', v:67, src:'cransambassador.ch', page:'https://www.cransambassador.ch/en/', img:'https://www.cransambassador.ch/wp-content/uploads/2021/11/a07i5684-modifier-2.jpg', flag:''},
+  {n:'W Verbier', v:50, src:'spa-wverbier.com', page:'https://www.spa-wverbier.com/', img:'https://www.spa-wverbier.com/resourcefiles/homeimages/le-spa-new-pool.jpg', flag:''},
+  {n:'Nirvana Spa', v:46, src:'nirvana-privatespa.ch', page:'https://nirvana-privatespa.ch/', img:'https://nirvana-privatespa.ch/wp-content/uploads/SPA-privatif-nirvana-1.jpg', flag:''},
+  {n:'Noemi Spataro Esthetique', v:30, src:'esthetiqueetbienetre.wixsite.com', page:'https://esthetiqueetbienetre.wixsite.com/accueil', img:'https://static.wixstatic.com/media/500667_74ac1ae1b0f848dea74115200aa5ddb4~mv2.jpeg/v1/fill/w_1200,h_953,al_c,q_85,enc_auto/500667_74ac1ae1b0f848dea74115200aa5ddb4~mv2.jpeg', flag:'fiche pro'},
+  {n:'AM Soeurs', v:27, src:'salonkee.ch', page:'https://salonkee.ch/salon/am-soeurs?lang=fr', img:'https://salonkee.cloud/ch/data/3500/coverImage/n-d7z60vN2nxZXjdZD0VYjL-lg--opt', flag:''},
+  {n:'19th Avenue - Thonex', v:24, src:'19thavenue.ch', page:'http://www.19thavenue.ch/', img:'https://images.squarespace-cdn.com/content/v1/56308bffe4b054f055c2cd74/1730372267345-Y6GRT98MI3NC646RTJ9B/3.png?format=2500w', flag:''},
+  {n:"Institut Beaute d'Or", v:17, src:'beaute-d-or.ch', page:'https://www.beaute-d-or.ch/', img:'https://le-de.cdn-website.com/08f3469a00224588bdfe20e5d2df5c77/dms3rep/multi/opt/reception-1920w.jpg', flag:''},
+  {n:'Beauty Concept Pully', v:15, src:'beautyconceptswiss.ch', page:'https://beautyconceptswiss.ch/', img:'https://beautyconceptswiss.ch/wp-content/uploads/2025/10/photo_5992086154175958102_y.jpg', flag:'meme site que Vevey'},
+  {n:'Hotel des Horlogers', v:11, src:'hoteldeshorlogers.com', page:'https://www.hoteldeshorlogers.com/en/spa', img:'https://www.hoteldeshorlogers.com/uploads/media/2048x2048/04/754-imgi_42_481153482_996179672575500_4043386084584830096_n.jpg', flag:'spa (lobby a venir)'},
+  {n:'Elvi Haute Coiffure', v:7, src:'treatwell.ch', page:'https://www.treatwell.ch/ort/elvi-haute-coiffure/', img:'https://cdn1.treatwell.net/images/view/v2.i15127849.w1080.h720.x3C19669F/', flag:'fiche Treatwell'},
+  {n:'Enfants Terribles Bossonnens', v:5, src:'enfants-terribles.ch', page:'https://enfants-terribles.ch/salon-de-coiffure/bossonnens/', img:'https://enfants-terribles.ch/wp-content/uploads/2022/11/enfants-terribles-salon-Bossonnens-10.webp', flag:''},
+  {n:'Institut Vanhove', v:2, src:'institut-vanhove.com', page:'https://institut-vanhove.com/', img:'https://institut-vanhove.com/wp-content/uploads/vanhove-img-03.jpg', flag:'photo du site'}
+];
+var grid = document.getElementById('grid');
+items.forEach(function(it){
+  var c=document.createElement('div'); c.className='card';
+  var flag = it.flag ? '<span class="flag">'+it.flag+'</span>' : '';
+  c.innerHTML='<div class="ph"><img src="'+it.img+'" alt="'+it.n+'" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';"><div class="fail">Image non chargee<br>(ouvrir la source)</div></div><div class="meta"><p class="name">'+it.n+'</p><p class="vis">'+it.v+' visites <span>- 12 mois</span></p><p class="src">Source : <a href="'+it.page+'" target="_blank" rel="noopener">'+it.src+'</a></p>'+flag+'</div>';
+  grid.appendChild(c);
+});
+</script>
+</body>
+</html>
